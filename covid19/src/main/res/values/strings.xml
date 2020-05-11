@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">上健康宝</string>
+
+    <string name="title_c19">健康宝</string>
+    <string name="c19_back">返回首页</string>
+    <string name="c19_company">北京市大数据中心</string>
+
+    <string name="c19_status">未见异常</string>
+    <string name="c19_name">姓&#8195;&#8195;名:</string>
+    <string name="c19_id">身份证号:</string>
+    <string name="c19_time_select">查询时间:</string>
+    <string name="c19_time_expired">失效时间:</string>
+
+</resources>

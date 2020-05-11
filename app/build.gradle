@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+def ext = rootProject.ext
+def cfg = ext.android
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        applicationId cfg.applicationId
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    applicationVariants.all { variant ->
+        def versionName
+        def versionCode
+        if (variant.buildType.isDebuggable()) {
+        } else {
+            versionCode = cfg.versionCode
+            versionName = cfg.versionName
+
+            variant.outputs.all { output ->
+                output.versionNameOverride = versionName
+                output.versionCodeOverride = versionCode
+                outputFileName = "Health_${variant.productFlavors[0].name}_v${variant.versionName}_${variant.buildType.name}.apk"
+            }
+        }
+    }
+
+    flavorDimensions 'default'
+    productFlavors {
+        df {}
+
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug {
+            //signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            //signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/*.version'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+apply from: "../dependencies.gradle"
+dependencies {
+    implementation 'dc.common:logger:latest.integration'
+//    implementation project(':struct:base')
+//    implementation project(':struct:bridge')
+//    implementation project(':struct:adapter')
+//    implementation project(':struct:stat')
+//    implementation project(':struct:shell')
+//    implementation project(':struct:swipe')
+//    implementation project(':struct:permission')
+
+    implementation "dc.android:core:$ext.coreVersion"
+    implementation "dc.android:bridge:$ext.bridgeVersion"
+//    implementation "dc.android.bridge:adapter:$ext.adapterVersion"
+    implementation "dc.android.libs:stat:1.0.5"
+    implementation "dc.android:shell:$ext.shellVersion"
+//    implementation "dc.android.libs:swipe:$ext.swipeVersion"
+//    implementation "dc.android.libs:permission:$ext.permissionVersion"
+    implementation "dc.android.common:net:latest.integration"
+
+    implementation project(':primary')
+
+    implementation "com.google.code.gson:gson:$ext.gsonVersion"
+
+//    implementation "com.android.support:recyclerview-v7:$ext.supportLibrary"
+//    implementation "com.android.support:design:$ext.supportLibrary"
+//
+//    implementation "com.jakewharton:butterknife:$ext.butterknifeVersion"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:$ext.butterknifeVersion"
+//
+//    implementation "com.google.dagger:dagger:$ext.daggerVersion"
+//    annotationProcessor "com.google.dagger:dagger-compiler:$ext.daggerVersion"
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+}

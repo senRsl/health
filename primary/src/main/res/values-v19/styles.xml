@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Splash theme -->
+    <style name="WelcomeTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/layer_splash</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+</resources>
