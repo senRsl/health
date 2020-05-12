@@ -7,8 +7,15 @@
 
     <string name="c19_status">未见异常</string>
     <string name="c19_name">姓&#8195;&#8195;名:</string>
+    <string name="c19_name_value_tips">长按设置</string>
+    <string name="c19_name_value_default">赵**</string>
     <string name="c19_id">身份证号:</string>
+    <string name="c19_id_value_default">11**************34</string>
     <string name="c19_time_select">查询时间:</string>
     <string name="c19_time_expired">失效时间:</string>
+
+    <string name="setting_back">返回</string>
+    <string name="setting_save">保存</string>
+    <string name="pick_pic">选图</string>
 
 </resources>

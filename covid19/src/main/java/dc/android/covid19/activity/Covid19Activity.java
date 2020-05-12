@@ -11,7 +11,12 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 import dc.android.base.activity.BridgeActivity;
+import dc.android.common.utils.SharePreferencesUtils;
 import dc.android.covid19.R;
+
+import static dc.android.covid19.Covid19Context.KEY_ID;
+import static dc.android.covid19.Covid19Context.KEY_NAME;
+import static dc.android.covid19.Covid19Context.PATH_PIC;
 
 /**
  * @author senrsl
@@ -31,6 +36,7 @@ public class Covid19Activity extends BridgeActivity {
 
     SimpleDateFormat sdf;
     Date date;
+    SharePreferencesUtils sp;
 
     @Override
     protected void initLayout() {
@@ -54,7 +60,7 @@ public class Covid19Activity extends BridgeActivity {
     @Override
     protected void initData() {
         super.initData();
-
+        sp = new SharePreferencesUtils(this);
 
         sdf = new SimpleDateFormat("yyyy年MM月dd日");
         date = new Date();
@@ -63,15 +69,23 @@ public class Covid19Activity extends BridgeActivity {
         sdf.applyPattern("HH:mm:ss");
         setTime();
 
-        setHead();
-        setInfo();
+//        setHead();
+//        setInfo();
+        tvTimeSelect.setText(new SimpleDateFormat("MM-dd HH:mm").format(new Date(System.currentTimeMillis() - 1000 * 3600)));
+        tvTimeExpired.setText(new SimpleDateFormat("MM-dd").format(date) + " 24:00");
 
     }
 
-    private void setHead() {
-        String path = "/mnt/sdcard/SENRSL/health02.png";
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setHead();
+        setInfo();
+    }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
+    private void setHead() {
+
+        Bitmap bitmap = BitmapFactory.decodeFile(PATH_PIC);
         if (null == bitmap) return;
         RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         drawable.setCircular(false);
@@ -81,10 +95,8 @@ public class Covid19Activity extends BridgeActivity {
     }
 
     private void setInfo() {
-        tvName.setText("赵**");
-        tvId.setText("11**************34");
-        tvTimeSelect.setText(new SimpleDateFormat("MM-dd HH:mm").format(new Date(System.currentTimeMillis() - 1000 * 3600)));
-        tvTimeExpired.setText(new SimpleDateFormat("MM-dd").format(date) + " 24:00");
+        tvName.setText(sp.getSharedPreferencesValue(KEY_NAME, getString(R.string.c19_name_value_tips)));
+        tvId.setText(sp.getSharedPreferencesValue(KEY_ID, getString(R.string.c19_id_value_default)));
     }
 
     private void setTime() {

@@ -10,4 +10,9 @@ import dc.android.primary.PrimaryContext;
  */
 public class Covid19Context extends PrimaryContext {
 
+    public static final String KEY_NAME = "name";
+    public static final String KEY_ID = "id";
+
+    public static final String PATH_PIC = "/mnt/sdcard/SENRSL/health02.jpg";
+
 }
